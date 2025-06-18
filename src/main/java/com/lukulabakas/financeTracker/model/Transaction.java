@@ -1,8 +1,64 @@
 package com.lukulabakas.financeTracker.model;
 
+import java.time.LocalDate;
 
-//each entry is a transaction
+import jakarta.persistence.*;
+
+//each entry is saved as a transaction
+@Entity
+@Table(name = "transactions")
 public class Transaction {
-
+	//id is generated automatically to uniquely identify transactions
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	//user can set a description for his transaction
+	@Column(name = "description")
+	private String description;
+	//ENUM: INCOME or EXPENSE
+	@Column(name = "transactionType")
+	private TransactionType transactionType;
+	//either positive or negative amount
+	@Column(name = "amount")
+	private double amount;
+	//date of transaction (not of transaction creation)
+	@Column(name = "date")
+	private LocalDate date;
+	//user can choose a category (e.g. groceries)
+	@Column(name = "category")
+	private String category;
 	
+	public Transaction(String description, TransactionType transactionType, double amount, LocalDate date, String category) {
+		this.transactionType = transactionType;
+		this.amount = amount;
+		this.date = date;
+		this.description = description;
+		this.category = category;
+	}
+	
+	public Transaction() {
+		
+	}
+	
+	public int getId() {return this.id;}
+	
+	public void setDescription(String description) {this.description = description;}
+	public String getDescription() {return this.description;}
+	
+	public void setTransactionType(TransactionType transactionType) {this.transactionType = transactionType;}
+	public TransactionType getTransactionType() {return this.transactionType;}
+	
+	public void setAmount(double amount) {this.amount = amount;}
+	public double getAmount() {return this.amount;}
+	
+	public void setDate(LocalDate date) {this.date = date;}
+	public LocalDate getDate() {return this.date;}
+	
+	public void setCategory(String category) {this.category = category;}
+	public String getCategory() {return this.category;}
+	
+	@Override
+	public String toString() {
+		return "Transaction [ID: " + id + ", Description: " + description + ", TransactionType: " + transactionType + ", Amount: " + amount + ", Date: " + date + ", Category: " + category + "]";
+	}
 }
