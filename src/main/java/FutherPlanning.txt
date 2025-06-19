@@ -1,0 +1,30 @@
+Required function:
+	Basics
+		addTrans()				add new trans
+		getAllTrans()			list all trans
+		getTransById()			get trans via ID
+		updateTrans()			update trans
+		deleteTrans()			delete trans
+	Filtering and Search
+		findByDate()
+		findByType()
+		findByCategory()
+		findByDateRange()
+		...
+	Statistics
+		getMonthlySummary()
+		getBalance()
+		getTotalIncome()
+		getTotalExpenses()
+		getTopExepenses()
+	Test & Dummy
+		insertDummyData()		more Dummy Data, different dates etc.
+		deleteAllTransactions()	
+		
+		
+		
+POST request to create a new Transaction for testing:	
+curl -X POST http://localhost:8080/transactions \
+  -H "Content-Type: application/json" \
+  -d '{"description": "Freelance Payment", "transactionType": "INCOME", "amount": 1200.0, "date": "2025-06-17", "category": "Side Job"}'
+		
