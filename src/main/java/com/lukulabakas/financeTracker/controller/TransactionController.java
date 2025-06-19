@@ -12,24 +12,49 @@ import org.springframework.web.bind.annotation.*;
 import com.lukulabakas.financeTracker.model.Transaction;
 import com.lukulabakas.financeTracker.model.TransactionType;
 import com.lukulabakas.financeTracker.persistence.TransactionRepository;
+import com.lukulabakas.financeTracker.service.TransactionService;
 
 @RestController
-@RequestMapping("/transactions")
+@RequestMapping("/api/transactions")
 public class TransactionController {
 	
 	@Autowired
 	TransactionRepository transactionRepo;
+	@Autowired
+	TransactionService transactionService;
 	
-	//displays all current transactions
+	//Basic CRUD
+	//adds a new transaction
+	@PostMapping
+	public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction){
+		return ResponseEntity.ok(transactionService.addTransaction(transaction));
+	}
+	//returns all transactions
 	@GetMapping
 	public ResponseEntity<List<Transaction>> getAllTransactions(){
-		List<Transaction> transactions = transactionRepo.findAll();
-		return ResponseEntity.ok(transactions);
+		return  ResponseEntity.ok(transactionService.getAllTransactions());
 	}
 	
-	//only for testing
+	//Filtering and Search
+	//finds all transactions from a certain date
+	//?date=yyyy-mm-dd
+	@GetMapping("/filter")
+	public ResponseEntity<List<Transaction>> findTransactionsByDate(@RequestParam LocalDate date){
+		return ResponseEntity.ok(transactionService.findTransactionsByDate(date));
+	}
+	
+	//Statistics
+	//sums amounts of all transactions
+	@GetMapping("/sum")
+	public ResponseEntity<Double> sumAllTransactions() {
+		return ResponseEntity.ok(transactionService.sumAllTransactions());
+	}
+	
+	//ONLY FOR TESTING
+	//adds dummy transactions
+	//only adds transactions if there are no transactions saved yet
 	@GetMapping("/dummy")
-	public ResponseEntity<String> insertDummyDataOnce() {
+	public ResponseEntity<String> insertDummyData() {
 	    if (transactionRepo.count() == 0) {
 	        transactionRepo.saveAll(Arrays.asList(
 	            new Transaction("Salary", TransactionType.INCOME, 3000.0, LocalDate.now(), "monthly"),
@@ -41,32 +66,5 @@ public class TransactionController {
 	    } else {
 	        return ResponseEntity.ok("Database already contains transactions.");
 	    }
-	}
-	
-	//sums amounts of all transactions
-	@GetMapping("/sum")
-	public ResponseEntity<String> sumAllTransactions() {
-		double sum = 0;
-		List<Transaction> transactions = transactionRepo.findAll();
-		for(Transaction transaction: transactions) {
-			sum += transaction.getAmount();
-		}
-		sum = Math.floor(sum * 100)/100;
-		return ResponseEntity.ok("Total Sum: " + sum);
-	}
-	
-	//adds a new transaction
-	@PostMapping
-	public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction){
-		Transaction newTransaction = transactionRepo.save(transaction);
-		return ResponseEntity.ok(newTransaction);
-	}
-
-	
-	//finds all transactions from a certain date
-	@GetMapping("/filter")
-	public ResponseEntity<List<Transaction>> findAllTransactionsByDate(@RequestParam LocalDate date){
-		List<Transaction> transactions = transactionRepo.findByDate(date);
-		return ResponseEntity.ok(transactions);
 	}
 }

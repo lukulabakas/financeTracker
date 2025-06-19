@@ -1,24 +1,22 @@
 Required function:
 	Basics
-		addTrans()				add new trans
-		getAllTrans()			list all trans
-		getTransById()			get trans via ID
-		updateTrans()			update trans
-		deleteTrans()			delete trans
+		addTrans()				done
+		getAllTrans()			done
+		getTransById()			
+		updateTrans()			
+		deleteTrans()			
 	Filtering and Search
-		findByDate()
+		findByDate()			done
 		findByType()
 		findByCategory()
 		findByDateRange()
 		...
 	Statistics
-		getMonthlySummary()
-		getBalance()
-		getTotalIncome()
-		getTotalExpenses()
-		getTopExepenses()
+		getMonthlyBalance()
+		getBalance()			done
+		...
 	Test & Dummy
-		insertDummyData()		more Dummy Data, different dates etc.
+		insertDummyData()		done in controller class
 		deleteAllTransactions()	
 		
 		
