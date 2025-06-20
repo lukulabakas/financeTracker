@@ -1,28 +1,29 @@
 Required function:
-	Basics
-		addTrans()				done
-		getAllTrans()			done
-		getTransById()			
-		updateTrans()			
-		deleteTrans()			
+	Basics						in Controller	in Service
+		addTrans()				done			done
+		getAllTrans()			done			done
+		getTransById()			done
+		updateTrans()			done
+		deleteTrans()			done
 	Filtering and Search
-		findByDate()			done
+		findByDate()			done			done
 		findByType()
 		findByCategory()
 		findByDateRange()
 		...
 	Statistics
 		getMonthlyBalance()
-		getBalance()			done
+		getBalance()			done			done
 		...
 	Test & Dummy
-		insertDummyData()		done in controller class
+		insertDummyData()		done
 		deleteAllTransactions()	
 		
 		
 		
 POST request to create a new Transaction for testing:	
-curl -X POST http://localhost:8080/transactions \
+curl -X POST http://localhost:8080/api/transactions \
   -H "Content-Type: application/json" \
   -d '{"description": "Freelance Payment", "transactionType": "INCOME", "amount": 1200.0, "date": "2025-06-17", "category": "Side Job"}'
+		
 		

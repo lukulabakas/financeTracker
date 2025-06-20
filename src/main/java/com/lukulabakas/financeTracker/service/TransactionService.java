@@ -4,11 +4,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.lukulabakas.financeTracker.model.Transaction;
 import com.lukulabakas.financeTracker.persistence.TransactionRepository;
 
 //caontains all logic when handling Transactions
+@Service
 public class TransactionService {
 
 	@Autowired
@@ -28,12 +30,12 @@ public class TransactionService {
 		return null;
 	}
 	//updates existing transaction
-	public Transaction updateTransaction() {
+	public Transaction updateTransaction(int id, Transaction transaction) {
 		return null;
 	}
 	//deletes existing transaction
-	public Transaction deleteTransaction() {
-		return null;
+	public boolean deleteTransaction(int id) {
+		return true;
 	}
 
 	//Filtering and Search
@@ -54,6 +56,7 @@ public class TransactionService {
 	public List<Transaction> findTransactionsByDateRange(){
 		return null;
 	}
+	
 	//Statistics
 	//returns balance of transactions of chosen month
 	public 	double sumAllTransactionsByMonth() {

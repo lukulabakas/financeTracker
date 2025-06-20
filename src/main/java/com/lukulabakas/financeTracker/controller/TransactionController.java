@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,34 +24,52 @@ public class TransactionController {
 	@Autowired
 	TransactionService transactionService;
 	
-	//Basic CRUD
+	//----- Basic CRUD -----
 	//adds a new transaction
 	@PostMapping
 	public ResponseEntity<Transaction> addTransaction(@RequestBody Transaction transaction){
-		return ResponseEntity.ok(transactionService.addTransaction(transaction));
+		return new ResponseEntity<>(transactionService.addTransaction(transaction), HttpStatus.OK);
 	}
 	//returns all transactions
 	@GetMapping
 	public ResponseEntity<List<Transaction>> getAllTransactions(){
-		return  ResponseEntity.ok(transactionService.getAllTransactions());
+		return new ResponseEntity<>(transactionService.getAllTransactions(), HttpStatus.OK);
+	}
+	//return Transaction by ID
+	@GetMapping("/{id}")
+	public ResponseEntity<Transaction> getTransactionById(@PathVariable int id){
+		return new ResponseEntity<>(transactionService.getTransactionById(id), HttpStatus.OK);
+	}
+	@PutMapping("/")
+	public ResponseEntity<Transaction> updateTransaction(@PathVariable int id, @RequestBody Transaction transaction){
+		return new ResponseEntity<>(transactionService.updateTransaction(id, transaction), HttpStatus.OK);
+	}
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteTransaction(@PathVariable int id){
+		 boolean deleted = transactionService.deleteTransaction(id);
+		 if(deleted) {
+			 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		 }else {
+			 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		 }
 	}
 	
-	//Filtering and Search
+	//----- Filtering and Search -----
 	//finds all transactions from a certain date
 	//?date=yyyy-mm-dd
 	@GetMapping("/filter")
 	public ResponseEntity<List<Transaction>> findTransactionsByDate(@RequestParam LocalDate date){
-		return ResponseEntity.ok(transactionService.findTransactionsByDate(date));
+		return new ResponseEntity<>(transactionService.findTransactionsByDate(date), HttpStatus.OK);
 	}
 	
-	//Statistics
+	//----- Statistics -----
 	//sums amounts of all transactions
 	@GetMapping("/sum")
 	public ResponseEntity<Double> sumAllTransactions() {
-		return ResponseEntity.ok(transactionService.sumAllTransactions());
+		return new ResponseEntity<>(transactionService.sumAllTransactions(), HttpStatus.OK);
 	}
 	
-	//ONLY FOR TESTING
+	//----- ONLY FOR TESTING -----
 	//adds dummy transactions
 	//only adds transactions if there are no transactions saved yet
 	@GetMapping("/dummy")
@@ -62,9 +81,9 @@ public class TransactionController {
 	            new Transaction("Netflix", TransactionType.EXPENSE, -12.99, LocalDate.now(), "Subscription"),
 	            new Transaction("Spotify", TransactionType.EXPENSE, -13.99, LocalDate.now(), "Subscription")
 	        ));
-	        return ResponseEntity.ok("Dummy data inserted.");
+	        return new ResponseEntity<>("Dummy data inserted.", HttpStatus.OK);
 	    } else {
-	        return ResponseEntity.ok("Database already contains transactions.");
+	        return new ResponseEntity<>("Database already contains transactions.", HttpStatus.FORBIDDEN);
 	    }
 	}
 }
