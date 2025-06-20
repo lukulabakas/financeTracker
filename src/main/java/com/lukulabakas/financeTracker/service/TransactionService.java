@@ -4,10 +4,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.lukulabakas.financeTracker.model.Transaction;
+import com.lukulabakas.financeTracker.model.TransactionType;
 import com.lukulabakas.financeTracker.persistence.TransactionRepository;
+import com.lukulabakas.financeTracker.persistence.TransactionSpecifications;
 
 //caontains all logic when handling Transactions
 @Service
@@ -16,7 +19,7 @@ public class TransactionService {
 	@Autowired
 	TransactionRepository transactionRepo;
 	
-	//Basic CRUD
+	//----- Basic CRUD -----
 	//adds new transaction
 	public Transaction addTransaction(Transaction transaction) {
 		return transactionRepo.save(transaction);
@@ -38,26 +41,18 @@ public class TransactionService {
 		return true;
 	}
 
-	//Filtering and Search
+	//----- Filtering and Search -----
 	//returns transactions based on date
-	public List<Transaction> findTransactionsByDate(LocalDate date){
-		List<Transaction> transactions = transactionRepo.findByDate(date);
-		return transactions;
-	}
-	//returns transactions by Type (EXPENSE or INCOME)
-	public List<Transaction> findTransactionsByType(){
-		return null;
-	}
-	//returns transactions by category
-	public List<Transaction> findTransactionsByCategory(){
-		return null;
-	}
-	//returns transactions within a date range
-	public List<Transaction> findTransactionsByDateRange(){
-		return null;
+	public List<Transaction> filterTransactions(String description, TransactionType transactionType, Double amount, LocalDate date, String category){
+		Specification<Transaction> spec = TransactionSpecifications.descriptionContains(description)
+				.and(TransactionSpecifications.hasTransactionType(transactionType))
+				.and(TransactionSpecifications.hasAmount(amount))
+				.and(TransactionSpecifications.hasDate(date))
+				.and(TransactionSpecifications.categoryContains(category));
+		return transactionRepo.findAll(spec);
 	}
 	
-	//Statistics
+	//----- Statistics -----
 	//returns balance of transactions of chosen month
 	public 	double sumAllTransactionsByMonth() {
 		return 0.0;

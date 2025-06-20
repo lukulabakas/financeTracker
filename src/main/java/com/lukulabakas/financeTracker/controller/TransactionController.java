@@ -40,10 +40,14 @@ public class TransactionController {
 	public ResponseEntity<Transaction> getTransactionById(@PathVariable int id){
 		return new ResponseEntity<>(transactionService.getTransactionById(id), HttpStatus.OK);
 	}
-	@PutMapping("/")
+	//update a transaction with given id
+	@PutMapping("/{id}")
 	public ResponseEntity<Transaction> updateTransaction(@PathVariable int id, @RequestBody Transaction transaction){
 		return new ResponseEntity<>(transactionService.updateTransaction(id, transaction), HttpStatus.OK);
 	}
+	//deletes a transaction with given id
+	//returns 204 when successful
+	//returns 404 when not successful
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deleteTransaction(@PathVariable int id){
 		 boolean deleted = transactionService.deleteTransaction(id);
@@ -55,11 +59,16 @@ public class TransactionController {
 	}
 	
 	//----- Filtering and Search -----
-	//finds all transactions from a certain date
-	//?date=yyyy-mm-dd
+	//returns filtered List of transactions
 	@GetMapping("/filter")
-	public ResponseEntity<List<Transaction>> findTransactionsByDate(@RequestParam LocalDate date){
-		return new ResponseEntity<>(transactionService.findTransactionsByDate(date), HttpStatus.OK);
+	public ResponseEntity<List<Transaction>> findTransactionsByDate(
+			@RequestParam(required = false) String description, 
+			@RequestParam(required = false) TransactionType transactionType, 
+			@RequestParam(required = false) Double amount,
+			@RequestParam(required = false) LocalDate date,
+			@RequestParam(required = false) String category
+			){
+		return new ResponseEntity<>(transactionService.filterTransactions(description, transactionType, amount, date, category), HttpStatus.OK);
 	}
 	
 	//----- Statistics -----
