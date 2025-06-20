@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,12 +39,22 @@ public class TransactionController {
 	//return Transaction by ID
 	@GetMapping("/{id}")
 	public ResponseEntity<Transaction> getTransactionById(@PathVariable int id){
-		return new ResponseEntity<>(transactionService.getTransactionById(id), HttpStatus.OK);
+		Transaction transaction = transactionService.getTransactionById(id);
+		if(transaction == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}else {
+			return new ResponseEntity<>(transactionService.getTransactionById(id), HttpStatus.OK);
+		}
 	}
 	//update a transaction with given id
 	@PutMapping("/{id}")
 	public ResponseEntity<Transaction> updateTransaction(@PathVariable int id, @RequestBody Transaction transaction){
-		return new ResponseEntity<>(transactionService.updateTransaction(id, transaction), HttpStatus.OK);
+		Transaction updatedTransaction = transactionService.updateTransaction(id, transaction);
+		if(updatedTransaction == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}else {
+			return new ResponseEntity<>(updatedTransaction, HttpStatus.OK);
+		}
 	}
 	//deletes a transaction with given id
 	//returns 204 when successful

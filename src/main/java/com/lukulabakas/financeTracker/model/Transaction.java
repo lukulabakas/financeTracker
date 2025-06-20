@@ -20,7 +20,7 @@ public class Transaction {
 	private TransactionType transactionType;
 	//either positive or negative amount
 	@Column(name = "amount")
-	private double amount;
+	private Double amount;
 	//date of transaction (not of transaction creation)
 	@Column(name = "date")
 	private LocalDate date;
@@ -49,7 +49,7 @@ public class Transaction {
 	public TransactionType getTransactionType() {return this.transactionType;}
 	
 	public void setAmount(double amount) {this.amount = amount;}
-	public double getAmount() {return this.amount;}
+	public Double getAmount() {return this.amount;}
 	
 	public void setDate(LocalDate date) {this.date = date;}
 	public LocalDate getDate() {return this.date;}

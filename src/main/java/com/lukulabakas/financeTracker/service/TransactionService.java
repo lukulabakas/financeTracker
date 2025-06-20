@@ -28,17 +28,46 @@ public class TransactionService {
 	public List<Transaction> getAllTransactions(){
 		return transactionRepo.findAll();
 	}
-	//returns transaction by ID
+	//returns transaction by ID or null
 	public Transaction getTransactionById(int id) {
-		return null;
+		return transactionRepo.findById(id).orElse(null);
 	}
 	//updates existing transaction
+	//returns null if no transaction with id in table
+	//only updates attributes that are not null
 	public Transaction updateTransaction(int id, Transaction transaction) {
-		return null;
+		Transaction existingTransaction = transactionRepo.findById(id).orElse(null);
+		if(existingTransaction == null) {
+			return null;
+		}else {
+			if(transaction.getDescription() != null) {
+				existingTransaction.setDescription(transaction.getDescription());
+			}
+			if(transaction.getTransactionType() != null) {
+				existingTransaction.setTransactionType(transaction.getTransactionType());
+			}
+			if(transaction.getAmount() != null) {
+				existingTransaction.setAmount(transaction.getAmount());
+			}
+			if(transaction.getDate() != null) {
+				existingTransaction.setDate(transaction.getDate());
+			}
+			if(transaction.getCategory() != null) {
+				existingTransaction.setCategory(transaction.getCategory());
+			}
+			transactionRepo.save(existingTransaction);
+			return existingTransaction;
+		}
 	}
 	//deletes existing transaction
 	public boolean deleteTransaction(int id) {
-		return true;
+		Transaction transaction = transactionRepo.findById(id).orElse(null);
+		if(transaction == null) {
+			return false;
+		}else {
+			transactionRepo.deleteById(id);
+			return true;
+		}
 	}
 
 	//----- Filtering and Search -----
