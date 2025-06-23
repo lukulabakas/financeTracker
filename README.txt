@@ -17,7 +17,7 @@ This tool is designed to track financial transactions, mainly for tracking perso
 			findTrans()				done				done			
 			...
 		Statistics
-			getMonthlyBalance()
+			getMonthlyBalance()		done				done
 			getBalance()			done				done
 			...
 		Test & Dummy
@@ -35,4 +35,9 @@ This tool is designed to track financial transactions, mainly for tracking perso
 curl -X POST http://localhost:8080/api/transactions \
   -H "Content-Type: application/json" \
   -d '{"description": "Payment", "transactionType": "INCOME", "amount": 1200.0, "date": "2025-06-17", "category": "Side Job"}'
+  
+  
+### @RequestParam & @PathVariable
+- access to specific ressource 	> @PathVariable	>	/transactions/{id}
+- search / filter				> @RequestParam	>	/transactions/filter?id=
 		

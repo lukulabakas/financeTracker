@@ -88,6 +88,11 @@ public class TransactionController {
 	public ResponseEntity<Double> sumAllTransactions() {
 		return new ResponseEntity<>(transactionService.sumAllTransactions(), HttpStatus.OK);
 	}
+	@GetMapping("/monthlySum/{year}/{month}")
+	public ResponseEntity<Double> getMonthlySum(@PathVariable int year, @PathVariable int month){
+		Double monthlySum = transactionService.getMonthlySum(year, month);
+			return new ResponseEntity<>(monthlySum, HttpStatus.OK);
+	}
 	
 	//----- ONLY FOR TESTING -----
 	//adds dummy transactions

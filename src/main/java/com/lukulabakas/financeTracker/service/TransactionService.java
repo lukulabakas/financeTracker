@@ -86,6 +86,16 @@ public class TransactionService {
 	public 	double sumAllTransactionsByMonth() {
 		return 0.0;
 	}
+	//returns sum of all transactions of given month
+	public Double getMonthlySum(int year, int month) {
+		Specification<Transaction> spec = TransactionSpecifications.dateIsInMonth(year, month);
+		List<Transaction> transactions = transactionRepo.findAll(spec);
+		Double sum = 0.0;
+		for(Transaction transaction : transactions) {
+			sum += transaction.getAmount();
+		}
+		return sum;
+	}
 	//returns sum of all transactions -> get balance
 	public double sumAllTransactions() {
 		double sum = 0.0;

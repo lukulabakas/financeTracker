@@ -33,6 +33,14 @@ public class TransactionSpecifications {
 		date == null ? null:
 			criteriaBuilder.equal(transaction.get("date"), date);
 	}
+	//checks if date is within a given month, if not null WHERE clause is built
+	public static Specification<Transaction> dateIsInMonth(int year, int month){
+		return (transaction, query, criteriaBuilder) -> {
+		LocalDate start = LocalDate.of(year, month, 1);
+		LocalDate end = start.withDayOfMonth(start.lengthOfMonth());
+		return criteriaBuilder.between(transaction.get("date"), start, end);
+		};
+	}
 	//checks if a category was given or null, if not null WHERE clause is built
 	public static Specification<Transaction> categoryContains(String category){
 		return (transaction, query, criteriaBuilder) -> 
