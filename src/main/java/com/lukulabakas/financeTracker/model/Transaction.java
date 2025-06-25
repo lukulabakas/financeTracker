@@ -26,11 +26,11 @@ public class Transaction {
 	private LocalDate date;
 	@ManyToOne
 	//a transaction always belongs to one unique user
-	@JoinColumn(name = "userid")
+	@JoinColumn(name = "user_id")
 	private User user;
 	//user can choose a category (e.g. groceries)
 	@ManyToOne
-	@JoinColumn(name = "categoryid")
+	@JoinColumn(name = "category_id")
 	private Category category;
 	
 	public Transaction(String description, TransactionType transactionType, double amount, LocalDate date, Category category) {

@@ -6,8 +6,7 @@ This tool is designed to track financial transactions, mainly for tracking perso
 ### To Do List
 
 - Backend
-	- Change category attribute of Transaction to Category type instead of String 
-	  (users will be able to retrieve, add, delete, or change their categories)
+	- Setup User Controller, Service and Repository
 	- Required data functionality:
 		> TRANSACTION
 		Basics						api endpoint 		DB call
@@ -21,8 +20,8 @@ This tool is designed to track financial transactions, mainly for tracking perso
 			findTrans()				done				done			
 			...
 		Statistics
-			getMonthlyBalance()		done				done
-			getBalance()			done				done
+			getMonthlySum()			done				done
+			sumAllTransactions()	done				done
 			...
 		Test & Dummy
 			insertDummyData()		done				/
