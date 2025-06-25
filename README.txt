@@ -4,15 +4,19 @@ This tool is designed to track financial transactions, mainly for tracking perso
 
 
 ### To Do List
+
 - Backend
-	Required data functionality:
+	- Change category attribute of Transaction to Category type instead of String 
+	  (users will be able to retrieve, add, delete, or change their categories)
+	- Required data functionality:
+		> TRANSACTION
 		Basics						api endpoint 		DB call
 									in Controller		in Service
 			addTrans()				done				done
 			getAllTrans()			done				done
-			getTransById()			done				*
-			updateTrans()			done				*
-			deleteTrans()			done				*
+			getTransById()			done				done
+			updateTrans()			done				done
+			deleteTrans()			done				done
 		Filtering and Search
 			findTrans()				done				done			
 			...
@@ -23,7 +27,13 @@ This tool is designed to track financial transactions, mainly for tracking perso
 		Test & Dummy
 			insertDummyData()		done				/
 			deleteAllTrans()	
-			
+		> CATEGORY
+			addCategory()			done				done
+			getAllCategories()		done				done
+			getCategoryById()		done				done
+			updateCategory()		done				done
+			deleteCategory()		done				done
+	
 - Frontend
 	-> Planned to be done with React
 	-> Planned after backend is completed
