@@ -24,11 +24,16 @@ public class Transaction {
 	//date of transaction (not of transaction creation)
 	@Column(name = "date")
 	private LocalDate date;
+	@ManyToOne
+	//a transaction always belongs to one unique user
+	@JoinColumn(name = "userid")
+	private User user;
 	//user can choose a category (e.g. groceries)
-	@Column(name = "category")
-	private String category;
+	@ManyToOne
+	@JoinColumn(name = "categoryid")
+	private Category category;
 	
-	public Transaction(String description, TransactionType transactionType, double amount, LocalDate date, String category) {
+	public Transaction(String description, TransactionType transactionType, double amount, LocalDate date, Category category) {
 		this.transactionType = transactionType;
 		this.amount = amount;
 		this.date = date;
@@ -54,8 +59,8 @@ public class Transaction {
 	public void setDate(LocalDate date) {this.date = date;}
 	public LocalDate getDate() {return this.date;}
 	
-	public void setCategory(String category) {this.category = category;}
-	public String getCategory() {return this.category;}
+	public void setCategory(Category category) {this.category = category;}
+	public Category getCategory() {return this.category;}
 	
 	@Override
 	public String toString() {

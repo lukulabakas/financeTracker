@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+import com.lukulabakas.financeTracker.model.Category;
 import com.lukulabakas.financeTracker.model.Transaction;
 import com.lukulabakas.financeTracker.model.TransactionType;
 import com.lukulabakas.financeTracker.persistence.TransactionRepository;
@@ -100,10 +100,10 @@ public class TransactionController {
 	public ResponseEntity<String> insertDummyData() {
 	    if (transactionRepo.count() == 0) {
 	        transactionRepo.saveAll(Arrays.asList(
-	            new Transaction("Salary", TransactionType.INCOME, 3000.0, LocalDate.now(), "monthly"),
-	            new Transaction("Rent", TransactionType.EXPENSE, -900.0, LocalDate.now(), ""),
-	            new Transaction("Netflix", TransactionType.EXPENSE, -12.99, LocalDate.now(), "Subscription"),
-	            new Transaction("Spotify", TransactionType.EXPENSE, -13.99, LocalDate.now(), "Subscription")
+	            new Transaction("Salary", TransactionType.INCOME, 3000.0, LocalDate.now(), new Category("monthly")),
+	            new Transaction("Rent", TransactionType.EXPENSE, -900.0, LocalDate.now(), new Category("")),
+	            new Transaction("Netflix", TransactionType.EXPENSE, -12.99, LocalDate.now(), new Category("Subscription")),
+	            new Transaction("Spotify", TransactionType.EXPENSE, -13.99, LocalDate.now(), new Category("Subscription"))
 	        ));
 	        return new ResponseEntity<>("Dummy data inserted.", HttpStatus.OK);
 	    } else {
