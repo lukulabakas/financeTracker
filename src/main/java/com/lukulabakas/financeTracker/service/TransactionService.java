@@ -71,7 +71,7 @@ public class TransactionService {
 	}
 
 	//----- Filtering and Search -----
-	//returns transactions based on date
+	//returns transactions based on date (one fixed day as date parameter)
 	public List<Transaction> filterTransactions(String description, TransactionType transactionType, Double amount, LocalDate date, String category){
 		Specification<Transaction> spec = TransactionSpecifications.descriptionContains(description)
 				.and(TransactionSpecifications.hasTransactionType(transactionType))
@@ -80,15 +80,24 @@ public class TransactionService {
 				.and(TransactionSpecifications.categoryContains(category));
 		return transactionRepo.findAll(spec);
 	}
+	//returns transactions based on filter criteria (start and end date for time span as date parameters)
+	public List<Transaction> filterTransactions(String description, TransactionType transactionType, Double amount, LocalDate startDate, LocalDate endDate, String category){
+		Specification<Transaction> spec = TransactionSpecifications.descriptionContains(description)
+				.and(TransactionSpecifications.hasTransactionType(transactionType))
+				.and(TransactionSpecifications.hasAmount(amount))
+				.and(TransactionSpecifications.hasTimeSpan(startDate, endDate))
+				.and(TransactionSpecifications.categoryContains(category));
+		return transactionRepo.findAll(spec);
+	}
 	
 	//----- Statistics -----
-	//returns balance of transactions of chosen month
-	public 	double sumAllTransactionsByMonth() {
-		return 0.0;
-	}
 	//returns sum of all transactions of given month
 	public Double getMonthlySum(int year, int month) {
-		Specification<Transaction> spec = TransactionSpecifications.dateIsInMonth(year, month);
+		//set first day of month
+		LocalDate startDate = LocalDate.of(year, month, 1);
+		//set last day of month
+		LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+		Specification<Transaction> spec = TransactionSpecifications.hasTimeSpan(startDate, endDate);
 		List<Transaction> transactions = transactionRepo.findAll(spec);
 		Double sum = 0.0;
 		for(Transaction transaction : transactions) {
