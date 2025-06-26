@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lukulabakas.financeTracker.model.User;
+import com.lukulabakas.financeTracker.persistence.UserRepository;
 
 @Service
 public class UserService {
@@ -15,18 +16,39 @@ public class UserService {
 	
 	//----- Basic CRUD -----
 	public User getUserById(int id) {
-		return null;
+		return userRepo.findById(id).orElse(null);
 	}
 	public User addUser(User user) {
-		return null;
+		return userRepo.save(user);
 	}
 	public User updateUser(int id, User user) {
-		return null;
+		User existingUser = userRepo.findById(id).orElse(null);
+		if(existingUser == null) {
+			return null;
+		}else {
+			if(user.getUsername() != null) {
+				existingUser.setUsername(user.getUsername());
+			}
+			if(user.getPassword() != null) {
+				existingUser.setPassword(user.getPassword());
+			}
+			if(user.getEmail() != null) {
+				existingUser.setEmail(user.getPassword());
+			}
+			userRepo.save(existingUser);
+			return existingUser;
+		}
 	}
 	public boolean deleteUser(int id) {
-		return true;
+		User user = userRepo.findById(id).orElse(null);
+		if(user == null) {
+			return false;
+		}else {
+			userRepo.deleteById(id);
+			return true;
+		}
 	}
 	public List<User> getAllUsers(){
-		return null;
+		return userRepo.findAll();
 	}
 }

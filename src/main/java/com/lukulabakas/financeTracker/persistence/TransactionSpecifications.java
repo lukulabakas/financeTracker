@@ -33,7 +33,7 @@ public class TransactionSpecifications {
 		date == null ? null:
 			criteriaBuilder.equal(transaction.get("date"), date);
 	}
-	//checks if date is within a given month, if not null WHERE clause is built
+	//builds a where clause that looks for a date within the given timespan
 	public static Specification<Transaction> hasTimeSpan(LocalDate startDate, LocalDate endDate){
 		return (transaction, query, criteriaBuilder) -> {
 		return criteriaBuilder.between(transaction.get("date"), startDate, endDate);
