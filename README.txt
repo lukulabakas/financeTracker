@@ -33,11 +33,11 @@ This tool is designed to track financial transactions, mainly for tracking perso
 			updateCategory()		done				done
 			deleteCategory()		done				done
 		> USER
-			addUser()
-			getAllUsers()
-			getUserById()
-			updateUser()
-			deleteUser()
+			addUser()				done				done
+			getAllUsers()			done				done
+			getUserById()			done				done
+			updateUser()			done				done
+			deleteUser()			done				done
 	
 - Frontend
 	-> Planned to be done with React
