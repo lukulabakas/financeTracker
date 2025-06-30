@@ -15,6 +15,6 @@ import com.lukulabakas.financeTracker.model.Transaction;
 public interface TransactionRepository extends JpaRepository<Transaction, Integer>, JpaSpecificationExecutor<Transaction>{
 	List<Transaction> findByDate(LocalDate date);
 	//sums all transaction amounts within date span
-	@Query("SELECT SUM(amount) FROM transactions WHERE date BETWEEN :start AND :end")
+	@Query("SELECT SUM(t.amount) FROM Transaction t WHERE t.date BETWEEN :start AND :end")
 	Double sumByDateBetween(@Param("start") LocalDate start, @Param("end") LocalDate end);
 }

@@ -13,6 +13,7 @@ import com.lukulabakas.financeTracker.model.Category;
 import com.lukulabakas.financeTracker.model.Transaction;
 import com.lukulabakas.financeTracker.model.TransactionType;
 import com.lukulabakas.financeTracker.persistence.TransactionRepository;
+import com.lukulabakas.financeTracker.service.CategoryService;
 import com.lukulabakas.financeTracker.service.TransactionService;
 
 @RestController
@@ -23,6 +24,8 @@ public class TransactionController {
 	TransactionRepository transactionRepo;
 	@Autowired
 	TransactionService transactionService;
+	@Autowired
+	CategoryService categoryService;
 	
 	//----- Basic CRUD -----
 	//adds a new transaction
@@ -99,11 +102,12 @@ public class TransactionController {
 	@GetMapping("/dummy")
 	public ResponseEntity<String> insertDummyData() {
 	    if (transactionRepo.count() == 0) {
+	    	categoryService.addCategory(new Category("Subscription"));
 	        transactionRepo.saveAll(Arrays.asList(
-	            new Transaction("Salary", TransactionType.INCOME, 3000.0, LocalDate.now(), new Category("monthly")),
-	            new Transaction("Rent", TransactionType.EXPENSE, -900.0, LocalDate.now(), new Category("")),
-	            new Transaction("Netflix", TransactionType.EXPENSE, -12.99, LocalDate.now(), new Category("Subscription")),
-	            new Transaction("Spotify", TransactionType.EXPENSE, -13.99, LocalDate.now(), new Category("Subscription"))
+	            new Transaction("Salary", TransactionType.INCOME, 3000.0, LocalDate.now(), categoryService.getCategoryById(1)),
+	            new Transaction("Rent", TransactionType.EXPENSE, -900.0, LocalDate.now(), categoryService.getCategoryById(1)),
+	            new Transaction("Netflix", TransactionType.EXPENSE, -12.99, LocalDate.now(), categoryService.getCategoryById(1)),
+	            new Transaction("Spotify", TransactionType.EXPENSE, -13.99, LocalDate.now(), categoryService.getCategoryById(1))
 	        ));
 	        return new ResponseEntity<>("Dummy data inserted.", HttpStatus.OK);
 	    } else {
