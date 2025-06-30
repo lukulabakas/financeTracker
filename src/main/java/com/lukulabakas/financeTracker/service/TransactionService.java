@@ -17,7 +17,7 @@ import com.lukulabakas.financeTracker.persistence.TransactionSpecifications;
 public class TransactionService {
 
 	@Autowired
-	TransactionRepository transactionRepo;
+	private TransactionRepository transactionRepo;
 	
 	//----- Basic CRUD -----
 	//adds new transaction

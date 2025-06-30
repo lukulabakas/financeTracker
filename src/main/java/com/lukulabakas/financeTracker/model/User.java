@@ -20,8 +20,7 @@ public class User {
 	private int id;
 	@Column(name = "username")
 	private String username;
-	//to be edited and ecrypted later
-	//as for now for testing password is visibly saved
+	@Column(name = "password")
 	private String password;
 	@Column(name = "email")
 	private String email;

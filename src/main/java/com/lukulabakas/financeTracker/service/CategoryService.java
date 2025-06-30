@@ -13,7 +13,7 @@ import com.lukulabakas.financeTracker.persistence.CategoryRepository;
 public class CategoryService {
 
 	@Autowired
-	CategoryRepository categoryRepo;
+	private CategoryRepository categoryRepo;
 	
 	//----- Basic CRUD -----
 	//adds a new category
