@@ -10,6 +10,7 @@ import com.lukulabakas.financeTracker.model.User;
 //allows to use JpaRepository methods: save(), findOne(), findById(), findAll(), count(), delete(), deleteById()
 public interface UserRepository extends JpaRepository<User, Integer>{
 	public Optional<User> findUserByEmail(String email);
+	public Optional<User> findUserByUsername(String username);
 	
 
 }
